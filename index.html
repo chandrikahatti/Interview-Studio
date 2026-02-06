@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterviewIQ - Get interview-ready with confidence</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .animate-fade-in { animation: fade-in 0.6s ease-out; }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        body { margin: 0; padding: 0; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Icon Components
+        const User = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>;
+        const Upload = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>;
+        const FileText = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>;
+        const Play = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
+        const Clock = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>;
+        const CheckCircle = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>;
+        const AlertCircle = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>;
+        const Calendar = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>;
+        const Mic = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path></svg>;
+        const Award = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>;
+        const TrendingUp = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>;
+        const Target = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>;
+        const Shield = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>;
+        const Zap = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>;
+        const LogOut = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>;
+        const BookOpen = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>;
+        const Info = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>;
+        const Edit3 = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>;
+        const ArrowLeft = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>;
+        const Pause = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>;
+        const Home = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>;
+        const Briefcase = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>;
+        const Lightbulb = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>;
+        const Mail = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>;
+
+        const App = () => {
+            const [screen, setScreen] = useState('signup');
+            const [hasResume, setHasResume] = useState(false);
+            const [hasJD, setHasJD] = useState(false);
+            const [showModal, setShowModal] = useState(false);
+            const [showSkillModal, setShowSkillModal] = useState(false);
+            const [mode, setMode] = useState(null);
+            const [selectedSkill, setSelectedSkill] = useState(null);
+            const [userEmail, setUserEmail] = useState('');
+            const [showEmailSent, setShowEmailSent] = useState(false);
+            const [showUserFeedback, setShowUserFeedback] = useState(false);
+            const [interviewsCompleted, setInterviewsCompleted] = useState({
+                warmup: { count: 0, nextAvailable: null },
+                tech: { count: 0, nextAvailable: null },
+                behavior: { count: 0, nextAvailable: null },
+                scenario: { count: 0, nextAvailable: null },
+                mock: { count: 0, nextAvailable: null }
+            });
+            const [feedbackExperience, setFeedbackExperience] = useState(null);
+            const [feedbackImprovements, setFeedbackImprovements] = useState([]);
+            const [feedbackInterviewType, setFeedbackInterviewType] = useState(null);
+            const [feedbackEarlyAccess, setFeedbackEarlyAccess] = useState(null);
+            const [feedbackEarlyAccessEmail, setFeedbackEarlyAccessEmail] = useState('');
+            const [feedbackAdditional, setFeedbackAdditional] = useState('');
+
+            const modes = [
+                { id: 'warmup', name: 'Quick Warm-Up', duration: '15 mins', type: 'MCQs · Daily', emoji: '🟢' },
+                { id: 'tech', name: 'Tech Deep Dive', duration: '20 mins', type: 'Voice / Text', emoji: '🔵' },
+                { id: 'behavior', name: 'Behavior & Culture', duration: '20 mins', type: 'Voice / Text', emoji: '🟣' },
+                { id: 'scenario', name: 'Scenario Round', duration: '20 mins', type: 'Techno-Behavioral', emoji: '🟠' },
+                { id: 'mock', name: 'Mock Interview', duration: '30 mins', type: 'Full Simulation', emoji: '🔴' },
+            ];
+
+            const getNextAvailableTime = (modeId) => {
+                const completed = interviewsCompleted[modeId];
+                if (!completed.nextAvailable) return null;
+                const now = new Date();
+                const nextAvail = new Date(completed.nextAvailable);
+                if (nextAvail <= now) return null;
+                const hoursLeft = Math.ceil((nextAvail - now) / (1000 * 60 * 60));
+                return `${hoursLeft}h`;
+            };
+
+            const canTakeInterview = (modeId) => {
+                const completed = interviewsCompleted[modeId];
+                if (!completed.nextAvailable) return true;
+                return new Date() >= new Date(completed.nextAvailable);
+            };
+
+            const markInterviewComplete = (modeId) => {
+                const nextAvailable = new Date();
+                nextAvailable.setHours(nextAvailable.getHours() + 24);
+                setInterviewsCompleted(prev => ({
+                    ...prev,
+                    [modeId]: {
+                        count: prev[modeId].count + 1,
+                        nextAvailable: nextAvailable.toISOString()
+                    }
+                }));
+            };
+
+            const InterviewControls = ({ showPause = true }) => (
+                <div className="flex gap-3 mb-6">
+                    <button onClick={() => setScreen('practice')} className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-all flex items-center gap-2">
+                        <ArrowLeft /> Back
+                    </button>
+                    {showPause && (
+                        <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-all flex items-center gap-2">
+                            <Pause /> Pause
+                        </button>
+                    )}
+                    <button onClick={() => setScreen('home')} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all flex items-center gap-2">
+                        <Home /> Interview Hub
+                    </button>
+                </div>
+            );
+
+/* ============================================
+   END OF PART 1
+   CONTINUE WITH PART 2
+   ============================================ */
+/* ============================================
+   PART 2 OF 3
+   COPY THIS IMMEDIATELY AFTER PART 1
+   ============================================ */
+
+            return (
+                <div className="min-h-screen bg-slate-950">
+                    {/* Sign Up Screen */}
+                    {screen === 'signup' && (
+                        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center px-6">
+                            <div className="max-w-md w-full">
+                                <div className="text-center mb-8">
+                                    <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent mb-4">InterviewIQ</h1>
+                                    <p className="text-slate-300 text-lg">Start your 7-day trial today</p>
+                                </div>
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-8">
+                                    <h2 className="text-2xl font-bold text-white mb-6">Create Your Account</h2>
+                                    <div className="space-y-4">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-300 mb-2">First Name</label>
+                                                <input type="text" placeholder="John" className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-300 mb-2">Last Name</label>
+                                                <input type="text" placeholder="Doe" className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-300 mb-2">Country</label>
+                                            <select className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-indigo-500">
+                                                <option>United States</option>
+                                                <option>United Kingdom</option>
+                                                <option>Canada</option>
+                                                <option>India</option>
+                                                <option>Australia</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-300 mb-2">Email (Username)</label>
+                                            <input type="email" placeholder="you@example.com" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-300 mb-2">Password</label>
+                                            <input type="password" placeholder="••••••••" className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+                                        </div>
+                                        <button onClick={() => setShowEmailSent(true)} className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all">Sign Up - Start Free Trial</button>
+                                        <p className="text-center text-slate-400 text-sm">Already have an account? <button onClick={() => setScreen('login')} className="text-indigo-400 hover:text-indigo-300 font-semibold">Log In</button></p>
+                                    </div>
+                                </div>
+                            </div>
+                            {showEmailSent && (
+                                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-6">
+                                    <div className="bg-slate-900 border-2 border-indigo-500/50 rounded-2xl p-8 max-w-md w-full">
+                                        <div className="flex justify-center mb-4">
+                                            <div className="w-16 h-16 rounded-full bg-indigo-500/20 flex items-center justify-center"><Mail /></div>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-white text-center mb-4">Check Your Email!</h3>
+                                        <p className="text-slate-300 text-center mb-6">We've sent a verification link to<br/><span className="font-semibold text-indigo-400">{userEmail || 'your email'}</span></p>
+                                        <p className="text-slate-400 text-sm text-center mb-6">Click the link in the email to verify your account and start your 7-day trial.</p>
+                                        <button onClick={() => { setShowEmailSent(false); setScreen('login'); }} className="w-full px-4 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">Got it!</button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Login Screen */}
+                    {screen === 'login' && (
+                        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center px-6">
+                            <div className="max-w-md w-full">
+                                <div className="text-center mb-8">
+                                    <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent mb-4">InterviewIQ</h1>
+                                    <p className="text-slate-300 text-lg">Welcome back!</p>
+                                </div>
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-8">
+                                    <h2 className="text-2xl font-bold text-white mb-6">Log In</h2>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-300 mb-2">Email</label>
+                                            <input type="email" placeholder="you@example.com" className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-300 mb-2">Password</label>
+                                            <input type="password" placeholder="••••••••" className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+                                        </div>
+                                        <button onClick={() => setScreen('home')} className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all">Log In</button>
+                                        <p className="text-center text-slate-400 text-sm">Don't have an account? <button onClick={() => setScreen('signup')} className="text-indigo-400 hover:text-indigo-300 font-semibold">Sign Up</button></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Navigation - Only show when logged in */}
+                    {!['signup', 'login'].includes(screen) && (
+                        <nav className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 z-50">
+                            <div className="max-w-7xl mx-auto px-6 py-4">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-8">
+                                        <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">InterviewIQ</h1>
+                                        <div className="hidden md:flex gap-4">
+                                            {['home', 'practice', 'insights', 'profile', 'preferences'].map(s => (
+                                                <button key={s} onClick={() => setScreen(s)} className={`px-4 py-2 rounded-lg transition-all capitalize ${screen === s ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:text-white hover:bg-slate-800'}`}>
+                                                    {s === 'home' ? 'Interview Hub' : s === 'profile' ? 'My Profile' : s}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center"><User /></div>
+                                </div>
+                            </div>
+                        </nav>
+                    )}
+
+                    {/* Home Screen */}
+                    {screen === 'home' && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-6xl mx-auto">
+                                <div className="text-center mb-12 animate-fade-in">
+                                    <h2 className="text-5xl font-bold text-white mb-4">Welcome back, Chandrika 👋</h2>
+                                    <p className="text-2xl text-slate-300">Let's get you interview-ready.</p>
+                                </div>
+                                <div className="mb-8 bg-gradient-to-r from-indigo-900/40 to-purple-900/40 border-2 border-indigo-500/50 rounded-2xl p-6">
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center flex-shrink-0"><Calendar /></div>
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-bold text-white mb-2">Today's Practice Plan (10-15 mins)</h3>
+                                            <p className="text-indigo-200 mb-3">Today's Focus: Behavioral clarity</p>
+                                            <div className="space-y-2 mb-4">
+                                                <div className="flex items-center gap-2 text-slate-300"><CheckCircle /><span className="text-sm">Quick Warm-Up (5 mins)</span></div>
+                                                <div className="flex items-center gap-2 text-slate-300"><div className="w-5 h-5 rounded-full border-2 border-slate-500"></div><span className="text-sm">Practice 2 behavioral questions (8 mins)</span></div>
+                                                <div className="flex items-center gap-2 text-slate-300"><div className="w-5 h-5 rounded-full border-2 border-slate-500"></div><span className="text-sm">Review feedback (2 mins)</span></div>
+                                            </div>
+                                            <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all text-sm">Start Today's Plan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                                    <div className={`p-6 rounded-2xl border-2 transition-all ${hasResume ? 'bg-emerald-950/30 border-emerald-500/50' : 'bg-slate-900/50 border-slate-700/50'}`}>
+                                        <div className="flex items-start justify-between mb-4"><FileText />{hasResume && <CheckCircle />}</div>
+                                        <h3 className="text-xl font-semibold text-white mb-2">Resume</h3>
+                                        {hasResume ? (
+                                            <div>
+                                                <p className="text-slate-300 mb-3">✓ Resume uploaded and ready</p>
+                                                <button onClick={() => setScreen('resumeGap')} className="text-sm text-indigo-400 hover:text-indigo-300 underline">View Resume Gap Analysis →</button>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <p className="text-slate-400 mb-3">No resume uploaded yet</p>
+                                                <button onClick={() => setHasResume(true)} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all flex items-center gap-2"><Upload /> Upload Resume</button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className={`p-6 rounded-2xl border-2 transition-all ${hasJD ? 'bg-blue-950/30 border-blue-500/50' : 'bg-slate-900/50 border-slate-700/50'}`}>
+                                        <div className="flex items-start justify-between mb-4"><FileText />{hasJD && <CheckCircle />}</div>
+                                        <h3 className="text-xl font-semibold text-white mb-2">Job Description</h3>
+                                        <p className="text-slate-400 text-sm mb-3">Adding a job description helps us ask questions exactly like the company would.</p>
+                                        {!hasJD ? (
+                                            <button onClick={() => setHasJD(true)} className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-all flex items-center gap-2"><Upload /> Upload Job Description</button>
+                                        ) : (
+                                            <p className="text-blue-300">✓ Job description added</p>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="flex justify-center mb-6">
+                                    <button onClick={() => hasResume ? setScreen('practice') : setShowModal(true)} className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white text-lg font-semibold rounded-xl transition-all shadow-lg flex items-center gap-2">
+                                        <Play /> Start Practice with Resume
+                                    </button>
+                                </div>
+                                <div className="bg-purple-950/30 border-2 border-purple-500/50 rounded-2xl p-6 mb-8">
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0"><Lightbulb /></div>
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-bold text-white mb-2">Don't have your resume handy? No problem!</h3>
+                                            <p className="text-purple-200 mb-4">You can practice by selecting a skill or job title. We'll tailor questions accordingly.</p>
+                                            <button onClick={() => setShowSkillModal(true)} className="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all flex items-center gap-2"><Briefcase /> Practice by Skill/Role</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="grid md:grid-cols-3 gap-4">
+                                    <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-4 text-center">
+                                        <div className="text-3xl font-bold text-indigo-400">7</div>
+                                        <div className="text-sm text-slate-400 mt-1">Day Streak 🔥</div>
+                                    </div>
+                                    <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-4 text-center">
+                                        <div className="text-3xl font-bold text-purple-400">23</div>
+                                        <div className="text-sm text-slate-400 mt-1">Interviews Completed</div>
+                                    </div>
+                                    <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-4 text-center">
+                                        <div className="text-3xl font-bold text-pink-400">8.1</div>
+                                        <div className="text-sm text-slate-400 mt-1">Average Score</div>
+                                    </div>
+                                </div>
+                                {showModal && (
+                                    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-6">
+                                        <div className="bg-slate-900 border-2 border-slate-700 rounded-2xl p-8 max-w-md w-full">
+                                            <div className="flex justify-center mb-4"><AlertCircle /></div>
+                                            <h3 className="text-2xl font-bold text-white text-center mb-4">Resume Required</h3>
+                                            <p className="text-slate-300 text-center mb-6">Your resume helps us tailor questions like a real interviewer. Upload it to continue.</p>
+                                            <div className="flex gap-3">
+                                                <button onClick={() => setShowModal(false)} className="flex-1 px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg">Cancel</button>
+                                                <button onClick={() => { setHasResume(true); setShowModal(false); setScreen('practice'); }} className="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">Upload Resume</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                {showSkillModal && (
+                                    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-6 overflow-y-auto">
+                                        <div className="bg-slate-900 border-2 border-purple-500/50 rounded-2xl p-8 max-w-md w-full my-8">
+                                            <h3 className="text-3xl font-bold text-white mb-2">Enter Your Skill or Role</h3>
+                                            <p className="text-slate-300 mb-6">Type the role or skill you're preparing for, and we'll customize your interview practice.</p>
+                                            <div className="mb-6">
+                                                <label className="block text-sm font-semibold text-slate-300 mb-2">Skill or Job Title</label>
+                                                <input type="text" placeholder="e.g., Product Manager, Data Scientist, Software Engineer..." value={selectedSkill || ''} onChange={(e) => setSelectedSkill(e.target.value)} className="w-full p-4 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500" />
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <button onClick={() => setShowSkillModal(false)} className="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg">Cancel</button>
+                                                <button onClick={() => { if (selectedSkill && selectedSkill.trim()) { setShowSkillModal(false); setScreen('practice'); }}} disabled={!selectedSkill || !selectedSkill.trim()} className="flex-1 px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">Start Interview</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Practice Screen */}
+                    {screen === 'practice' && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-6xl mx-auto">
+                                <div className="mb-6">
+                                    <button onClick={() => setScreen('home')} className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-all flex items-center gap-2"><ArrowLeft /> Back to Interview Hub</button>
+                                </div>
+                                {selectedSkill && (
+                                    <div className="bg-purple-900/30 border border-purple-500/50 rounded-xl p-4 mb-6">
+                                        <div className="flex items-center gap-2 text-purple-300"><Briefcase /><span className="font-semibold">Practicing for: {selectedSkill}</span></div>
+                                    </div>
+                                )}
+                                <h2 className="text-4xl font-bold text-white mb-3 text-center">Choose Your Interview Mode</h2>
+                                <p className="text-slate-400 text-center mb-12">Select the practice type that matches your preparation needs</p>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {modes.map(m => {
+                                        const available = canTakeInterview(m.id);
+                                        const timeLeft = getNextAvailableTime(m.id);
+                                        return (
+                                            <div key={m.id} onClick={() => { if (available) { setMode(m); setScreen('preInterview'); }}} className={`group bg-slate-900/50 border-2 rounded-2xl p-6 transition-all relative ${available ? 'border-slate-700/50 hover:border-slate-600 hover:scale-105 cursor-pointer' : 'border-slate-800/50 opacity-60 cursor-not-allowed'}`}>
+                                                <div className="absolute top-4 right-4 text-3xl">{m.emoji}</div>
+                                                <h3 className="text-2xl font-bold text-white mb-3 pr-12">{m.name}</h3>
+                                                <div className="space-y-2 mb-6">
+                                                    <div className="flex items-center gap-2 text-slate-300"><Clock /><span>{m.duration}</span></div>
+                                                    <div className="text-slate-400 text-sm">{m.type}</div>
+                                                    {!available && timeLeft && (<div className="text-amber-400 text-sm font-semibold mt-2">Available in {timeLeft}</div>)}
+                                                </div>
+                                                <button disabled={!available} className={`w-full px-4 py-3 font-semibold rounded-lg ${available ? 'bg-gradient-to-r from-indigo-600 to-pink-600 text-white' : 'bg-slate-700 text-slate-400 cursor-not-allowed'}`}>{available ? 'Start →' : 'Locked'}</button>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+/* ============================================
+   END OF PART 2
+   CONTINUE WITH PART 3 (FINAL)
+   ============================================ */
+/* ============================================
+   PART 3 OF 3 (FINAL)
+   COPY THIS IMMEDIATELY AFTER PART 2
+   ============================================ */
+
+                    {/* Pre-Interview Confirmation */}
+                    {screen === 'preInterview' && mode && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-3xl mx-auto">
+                                <InterviewControls showPause={false} />
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-8">
+                                    <h2 className="text-3xl font-bold text-white mb-6 text-center">Interview Confirmation</h2>
+                                    <div className="space-y-4 mb-8">
+                                        <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
+                                            <span className="text-slate-300">Interview Mode</span>
+                                            <span className="text-white font-semibold">{mode.name}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
+                                            <span className="text-slate-300">Duration</span>
+                                            <span className="text-white font-semibold">{mode.duration}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
+                                            <span className="text-slate-300">Input Method</span>
+                                            <span className="text-white font-semibold">Voice / Text</span>
+                                        </div>
+                                        {selectedSkill ? (
+                                            <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
+                                                <span className="text-slate-300">Selected Role</span>
+                                                <span className="text-purple-400 font-semibold">{selectedSkill}</span>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
+                                                    <span className="text-slate-300">Resume</span>
+                                                    <span className={`font-semibold ${hasResume ? 'text-emerald-400' : 'text-red-400'}`}>{hasResume ? '✔ Uploaded' : '❌ Not Added'}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
+                                                    <span className="text-slate-300">Job Description</span>
+                                                    <span className={`font-semibold ${hasJD ? 'text-blue-400' : 'text-slate-500'}`}>{hasJD ? '✔ Applied' : '❌ Not Added'}</span>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                    <button onClick={() => setScreen('interview')} className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all">Begin Interview</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Interview Screen */}
+                    {screen === 'interview' && mode && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-5xl mx-auto">
+                                <InterviewControls />
+                                <div className="flex justify-between items-center mb-8">
+                                    <h2 className="text-2xl font-bold text-white">{mode.name}</h2>
+                                    <div className="flex items-center gap-2 px-6 py-3 bg-slate-800 rounded-full"><Clock /><span className="text-white font-semibold">14:32</span></div>
+                                </div>
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-8 mb-6">
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center"><span className="text-white font-bold">AI</span></div>
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-semibold text-white mb-4">Question 3 of 8</h3>
+                                            <p className="text-lg text-slate-200">Tell me about a time when you had to deal with a difficult stakeholder. How did you handle the situation and what was the outcome?</p>
+                                            <button className="mt-4 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm">⟳ Repeat Question</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-6 mb-6">
+                                    <div className="flex items-center gap-4 mb-4">
+                                        <div className="animate-pulse"><Mic /></div>
+                                        <span className="text-slate-300">Recording... Speak your answer</span>
+                                    </div>
+                                    <textarea placeholder="Or type your answer here..." className="w-full h-32 bg-slate-800 border border-slate-600 rounded-lg p-4 text-white placeholder-slate-500 resize-none focus:outline-none focus:border-indigo-500" />
+                                </div>
+                                <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-4 mb-8">
+                                    <div className="flex items-center gap-2 mb-2"><Edit3 /><span className="text-sm text-slate-400">Private Notes / Scratchpad</span></div>
+                                    <textarea placeholder="Jot down quick notes..." className="w-full h-20 bg-slate-800/50 border border-slate-700 rounded-lg p-3 text-sm text-slate-300 resize-none" />
+                                </div>
+                                <div className="flex gap-4">
+                                    <button onClick={() => setScreen('feedback')} className="px-8 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold rounded-xl">Submit Answer</button>
+                                    <button className="px-6 py-4 bg-slate-700 hover:bg-slate-600 text-white rounded-xl">Skip Question</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Feedback Screen */}
+                    {screen === 'feedback' && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-4xl mx-auto">
+                                <InterviewControls showPause={false} />
+                                <div className="text-center mb-8">
+                                    <h2 className="text-4xl font-bold text-white mb-4">Interview Complete! 🎉</h2>
+                                    <p className="text-slate-300">Here's how you performed</p>
+                                </div>
+                                <div className="bg-gradient-to-br from-indigo-900/50 to-pink-900/50 border-2 border-indigo-500/50 rounded-2xl p-8 mb-6 text-center">
+                                    <div className="text-6xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent mb-2">8.2/10</div>
+                                    <p className="text-xl text-white font-semibold mb-4">Overall Interview Score</p>
+                                    <div className="bg-slate-900/50 border border-indigo-400/30 rounded-lg p-4 inline-block">
+                                        <div className="flex items-center gap-2 text-indigo-300">
+                                            <Mail />
+                                            <span className="text-sm">📧 Detailed feedback has been sent to your email</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                                    <div className="bg-emerald-950/30 border-2 border-emerald-500/50 rounded-2xl p-6">
+                                        <h3 className="text-xl font-bold text-emerald-400 mb-4 flex items-center gap-2"><Award />Strengths</h3>
+                                        <ul className="space-y-2 text-slate-300">
+                                            <li>✓ Clear communication</li>
+                                            <li>✓ Good use of STAR method</li>
+                                            <li>✓ Confident delivery</li>
+                                            <li>✓ Relevant examples</li>
+                                        </ul>
+                                    </div>
+                                    <div className="bg-amber-950/30 border-2 border-amber-500/50 rounded-2xl p-6">
+                                        <h3 className="text-xl font-bold text-amber-400 mb-4 flex items-center gap-2"><TrendingUp />Improvement Areas</h3>
+                                        <ul className="space-y-2 text-slate-300">
+                                            <li>• Reduce filler words (um, uh)</li>
+                                            <li>• Be more concise</li>
+                                            <li>• Add more metrics</li>
+                                            <li>• Pause less frequently</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-6 mb-6">
+                                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><BookOpen />Sample Better Answer</h3>
+                                    <div className="bg-slate-800/50 rounded-lg p-4">
+                                        <p className="text-slate-300 text-sm">"In my role at TechCorp, I managed a project where the marketing VP wanted to change requirements mid-sprint. I scheduled a 30-minute alignment meeting, presented data showing the 2-week delay, and proposed a phased approach. The project launched on time with 95% satisfaction."</p>
+                                    </div>
+                                    <p className="text-xs text-slate-400 mt-3">💡 Notice: Specific role, concrete metrics, clear STAR structure, quantifiable outcome</p>
+                                </div>
+                                <div className="bg-gradient-to-br from-purple-900/50 to-purple-800/50 border-2 border-purple-500/50 rounded-2xl p-6 mb-6">
+                                    <h3 className="text-2xl font-bold text-purple-300 mb-4">🎯 Confidence Coach - Analytics</h3>
+                                    <p className="text-purple-200 mb-6 text-sm">Detailed analysis of your delivery and communication patterns</p>
+                                    <div className="grid md:grid-cols-2 gap-4 mb-6">
+                                        <div className="bg-slate-800/50 rounded-lg p-4">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <span className="text-sm text-slate-400">Filler Words</span>
+                                                <span className="text-xs px-2 py-1 bg-emerald-900/30 text-emerald-300 rounded">Improving</span>
+                                            </div>
+                                            <div className="text-3xl font-bold text-white mb-1">12 instances</div>
+                                            <div className="text-xs text-slate-400 mb-2">um, uh, you know detected</div>
+                                            <div className="flex items-center gap-2 text-emerald-400 text-sm">
+                                                <TrendingUp className="w-4 h-4" />
+                                                <span>↓ 32% from last week</span>
+                                            </div>
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-lg p-4">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <span className="text-sm text-slate-400">Speech Pace</span>
+                                                <span className="text-xs px-2 py-1 bg-blue-900/30 text-blue-300 rounded">Optimal</span>
+                                            </div>
+                                            <div className="text-3xl font-bold text-white mb-1">142 WPM</div>
+                                            <div className="text-xs text-slate-400 mb-2">Words per minute</div>
+                                            <div className="text-blue-400 text-sm">Perfect conversational pace</div>
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-lg p-4">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <span className="text-sm text-slate-400">Long Pauses</span>
+                                                <span className="text-xs px-2 py-1 bg-amber-900/30 text-amber-300 rounded">Watch</span>
+                                            </div>
+                                            <div className="text-3xl font-bold text-white mb-1">5 times</div>
+                                            <div className="text-xs text-slate-400 mb-2">Pauses over 3 seconds</div>
+                                            <div className="text-amber-400 text-sm">Consider preparation</div>
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-lg p-4">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <span className="text-sm text-slate-400">Clarity Score</span>
+                                                <span className="text-xs px-2 py-1 bg-emerald-900/30 text-emerald-300 rounded">Excellent</span>
+                                            </div>
+                                            <div className="text-3xl font-bold text-white mb-1">85%</div>
+                                            <div className="text-xs text-slate-400 mb-2">Speech intelligibility</div>
+                                            <div className="text-emerald-400 text-sm">Very clear articulation!</div>
+                                        </div>
+                                    </div>
+                                    <div className="bg-purple-950/30 rounded-lg p-4 border border-purple-500/30">
+                                        <h4 className="font-semibold text-white mb-2">📈 Your Progress Trend</h4>
+                                        <p className="text-purple-200 text-sm">Your filler words reduced by 32% this week. Keep practicing to maintain this improvement!</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-4 mb-8">
+                                    <button onClick={() => { if (mode) markInterviewComplete(mode.id); setShowUserFeedback(true); }} className="flex-1 px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold rounded-xl">Continue</button>
+                                </div>
+                            </div>
+
+                            {/* User Experience Feedback Modal */}
+                            {showUserFeedback && (
+                                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-6 overflow-y-auto">
+                                    <div className="bg-slate-900 border-2 border-indigo-500/50 rounded-2xl p-8 max-w-2xl w-full my-8">
+                                        <h3 className="text-3xl font-bold text-white mb-6 text-center">Help Us Improve! 🎯</h3>
+                                        <div className="mb-8">
+                                            <h4 className="text-xl font-semibold text-white mb-4">How was your interview experience?</h4>
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                                {[
+                                                    { emoji: '😃', label: 'Great', value: 'great' },
+                                                    { emoji: '🙂', label: 'Good', value: 'good' },
+                                                    { emoji: '😐', label: 'Okay', value: 'okay' },
+                                                    { emoji: '🙁', label: 'Poor', value: 'poor' }
+                                                ].map(option => (
+                                                    <button key={option.value} onClick={() => setFeedbackExperience(option.value)} className={`p-4 rounded-lg border-2 transition-all ${feedbackExperience === option.value ? 'border-indigo-500 bg-indigo-900/30' : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'}`}>
+                                                        <div className="text-3xl mb-2">{option.emoji}</div>
+                                                        <div className="text-white font-semibold">{option.label}</div>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="mb-8">
+                                            <h4 className="text-xl font-semibold text-white mb-4">What should we improve? (Select all that apply)</h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                {['Questions quality', 'Difficulty level', 'Interview realism', 'Feedback clarity', 'App speed'].map(option => (
+                                                    <button key={option} onClick={() => { setFeedbackImprovements(prev => prev.includes(option) ? prev.filter(i => i !== option) : [...prev, option]); }} className={`px-4 py-2 rounded-lg border-2 transition-all ${feedbackImprovements.includes(option) ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'}`}>{option}</button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="mb-8">
+                                            <h4 className="text-xl font-semibold text-white mb-4">What kind of interview do you want more of?</h4>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                {['Technical', 'Behavioral', 'Role-based (Sales / Finance / PM)', 'Resume-based', 'Company-specific'].map(option => (
+                                                    <button key={option} onClick={() => setFeedbackInterviewType(option)} className={`p-3 rounded-lg border-2 transition-all text-left ${feedbackInterviewType === option ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'}`}>{option}</button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="mb-8">
+                                            <h4 className="text-xl font-semibold text-white mb-4">Want early access to new features?</h4>
+                                            <div className="grid grid-cols-2 gap-3 mb-4">
+                                                <button onClick={() => setFeedbackEarlyAccess(true)} className={`p-4 rounded-lg border-2 transition-all ${feedbackEarlyAccess === true ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'}`}>✅ Yes, join waitlist</button>
+                                                <button onClick={() => setFeedbackEarlyAccess(false)} className={`p-4 rounded-lg border-2 transition-all ${feedbackEarlyAccess === false ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'}`}>❌ Not now</button>
+                                            </div>
+                                            {feedbackEarlyAccess === true && (
+                                                <input type="email" placeholder="Enter your email" value={feedbackEarlyAccessEmail} onChange={(e) => setFeedbackEarlyAccessEmail(e.target.value)} className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+                                            )}
+                                        </div>
+                                        <div className="mb-8">
+                                            <h4 className="text-xl font-semibold text-white mb-4">Anything else you'd like to share? (Optional)</h4>
+                                            <textarea placeholder="Share your thoughts..." value={feedbackAdditional} onChange={(e) => setFeedbackAdditional(e.target.value)} maxLength={200} className="w-full h-24 p-4 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 resize-none focus:outline-none focus:border-indigo-500" />
+                                            <div className="text-xs text-slate-400 mt-1 text-right">{feedbackAdditional.length}/200</div>
+                                        </div>
+                                        <p className="text-xs text-slate-500 text-center mb-6">Feedback is anonymous. Data can be deleted anytime.</p>
+                                        <button onClick={() => { setShowUserFeedback(false); setScreen('practice'); }} className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all">Submit Feedback</button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Insights Screen */}
+                    {screen === 'insights' && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-6xl mx-auto">
+                                <h2 className="text-4xl font-bold text-white mb-8 text-center">Your Progress Dashboard</h2>
+                                <div className="grid md:grid-cols-4 gap-4 mb-8">
+                                    {[
+                                        { label: 'Interview Readiness', value: '78%', color: 'indigo' },
+                                        { label: 'Resume Match', value: '82%', color: 'purple' },
+                                        { label: 'Practice Streak', value: '7 days', color: 'pink' },
+                                        { label: 'Avg Score', value: '8.1/10', color: 'emerald' }
+                                    ].map((stat, i) => (
+                                        <div key={i} className={`bg-gradient-to-br from-${stat.color}-900/50 to-${stat.color}-800/50 border border-${stat.color}-500/50 rounded-xl p-6`}>
+                                            <div className={`text-sm text-${stat.color}-300 mb-2`}>{stat.label}</div>
+                                            <div className="text-3xl font-bold text-white">{stat.value}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                     {/* Resume Gap Analysis Screen - ENHANCED */}
+                    {screen === 'resumeGap' && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-5xl mx-auto">
+                                <div className="flex items-center gap-3 mb-8">
+                                    <button onClick={() => setScreen('home')} className="text-slate-400 hover:text-white flex items-center gap-2">
+                                        <ArrowLeft /> Back to Interview Hub
+                                    </button>
+                                </div>
+                                
+                                <h2 className="text-4xl font-bold text-white mb-8">Resume Gap Analysis</h2>
+                                
+                                {/* Overall Match */}
+                                <div className="bg-gradient-to-br from-indigo-900/50 to-purple-900/50 border-2 border-indigo-500/50 rounded-2xl p-8 mb-6 text-center">
+                                    <div className="text-6xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-2">82%</div>
+                                    <p className="text-xl text-white font-semibold mb-2">Resume vs JD Match</p>
+                                    <p className="text-slate-300 text-sm">Strong alignment with job requirements</p>
+                                </div>
+                                
+                                {/* Missing Skills */}
+                                <div className="bg-slate-900/80 border-2 border-amber-500/50 rounded-2xl p-6 mb-6">
+                                    <h3 className="text-2xl font-bold text-amber-400 mb-4 flex items-center gap-2"><AlertCircle />Missing Skills</h3>
+                                    <div className="space-y-3">
+                                        {[
+                                            { skill: 'Agile/Scrum Certification', desc: 'The JD mentions "Certified Scrum Master preferred" - Consider getting this certification', priority: 'High', color: 'amber' },
+                                            { skill: 'SQL & Data Analysis', desc: 'JD requires "SQL proficiency" - Not mentioned in your resume', priority: 'Medium', color: 'orange' },
+                                            { skill: 'A/B Testing Experience', desc: 'JD mentions "experience with A/B testing frameworks"', priority: 'Low', color: 'slate' }
+                                        ].map((item, i) => (
+                                            <div key={i} className="bg-slate-800/50 rounded-lg p-4">
+                                                <div className="font-semibold text-white mb-1">{item.skill}</div>
+                                                <p className="text-sm text-slate-400 mb-2">{item.desc}</p>
+                                                <span className={`inline-block px-3 py-1 bg-${item.color}-900/30 text-${item.color}-300 rounded-full text-xs`}>{item.priority} Priority</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                
+                                {/* Buzzword Gaps */}
+                                <div className="bg-slate-900/80 border-2 border-blue-500/50 rounded-2xl p-6 mb-6">
+                                    <h3 className="text-2xl font-bold text-blue-400 mb-4 flex items-center gap-2"><Zap />Buzzword Gaps</h3>
+                                    <p className="text-slate-300 mb-4">Keywords from the JD that aren't in your resume:</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {['Data-driven decisions', 'Cross-functional leadership', 'Stakeholder management', 'MVP', 'Go-to-market strategy', 'Customer journey mapping', 'OKRs'].map(w => (
+                                            <span key={w} className="px-3 py-2 bg-blue-900/30 border border-blue-500/30 text-blue-300 rounded-lg text-sm">{w}</span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Suggested Resume Improvements */}
+                                <div className="bg-slate-900/80 border-2 border-emerald-500/50 rounded-2xl p-6">
+                                    <h3 className="text-2xl font-bold text-emerald-400 mb-4 flex items-center gap-2"><Target />Suggested Resume Improvements</h3>
+                                    <div className="space-y-4">
+                                        {[
+                                            { num: 1, title: 'Add Metrics Section', desc: 'Include a "Key Metrics" bullet: "Led 5 cross-functional teams across 3 product launches, achieving 40% user growth"' },
+                                            { num: 2, title: 'Incorporate JD Language', desc: 'Replace "managed projects" with "drove cross-functional initiatives" to match JD terminology' },
+                                            { num: 3, title: 'Highlight Relevant Tools', desc: 'Add "Tools: Jira, Asana, Mixpanel, SQL, Tableau" section if you have experience with these' },
+                                            { num: 4, title: 'Quantify Achievements', desc: 'Add specific numbers to your accomplishments: "Increased conversion by 25%", "Reduced churn by 15%"' }
+                                        ].map(item => (
+                                            <div key={item.num} className="bg-slate-800/50 rounded-lg p-4">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-1">
+                                                        <span className="text-white text-sm font-bold">{item.num}</span>
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-semibold text-white mb-1">{item.title}</div>
+                                                        <p className="text-sm text-slate-300">{item.desc}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {/* Profile Screen */}
+                    {screen === 'profile' && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-3xl mx-auto">
+                                <h2 className="text-4xl font-bold text-white mb-8 text-center">My Profile</h2>
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-8">
+                                    <div className="flex flex-col items-center mb-8">
+                                        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center mb-4">
+                                            <div className="scale-150"><User /></div>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-white">Chandrika</h3>
+                                        <p className="text-slate-400">chandrika@example.com</p>
+                                    </div>
+                                    <div className="space-y-6">
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-300 mb-2">Resume</label>
+                                            <div className="flex items-center justify-between p-4 bg-slate-800 rounded-lg">
+                                                <span className="text-white">Resume_Chandrika_2026.pdf</span>
+                                                <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm">Update</button>
+                                            </div>
+                                            <label className="flex items-center gap-2 mt-2 text-sm text-slate-400">
+                                                <input type="checkbox" defaultChecked className="rounded" />
+                                                Use as default for all interviews
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-300 mb-2">Primary Skills</label>
+                                            <input defaultValue="Product Management, Strategy, UX Research" className="w-full p-4 bg-slate-800 border border-slate-600 rounded-lg text-white" />
+                                        </div>
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-300 mb-2">Industry / Role</label>
+                                                <select className="w-full p-4 bg-slate-800 border border-slate-600 rounded-lg text-white">
+                                                    <option>Technology</option>
+                                                    <option>Finance</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-semibold text-slate-300 mb-2">Experience Level</label>
+                                                <select className="w-full p-4 bg-slate-800 border border-slate-600 rounded-lg text-white">
+                                                    <option>Intermediate</option>
+                                                    <option>Advanced</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-300 mb-2">Interview Difficulty</label>
+                                            <select className="w-full p-4 bg-slate-800 border border-slate-600 rounded-lg text-white">
+                                                <option>Beginner</option>
+                                                <option>Intermediate</option>
+                                                <option>Advanced</option>
+                                            </select>
+                                        </div>
+                                        <button className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold rounded-xl">Save Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Preferences Screen */}
+                    {screen === 'preferences' && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-3xl mx-auto">
+                                <h2 className="text-4xl font-bold text-white mb-8 text-center">Preferences</h2>
+                                <div className="space-y-6">
+                                    <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-6">
+                                        <h3 className="text-xl font-bold text-white mb-4">Interview Settings</h3>
+                                        <div className="space-y-4">
+                                            <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg">
+                                                <span className="text-slate-300">Default Answer Mode</span>
+                                                <select className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white">
+                                                    <option>Voice & Text</option>
+                                                    <option>Voice Only</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="bg-slate-900/80 border-2 border-blue-500/50 rounded-2xl p-6">
+                                        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Shield />Data & Privacy</h3>
+                                        <p className="text-slate-300 text-sm mb-4">Your audio and data are encrypted (AES-256) and secure. You have full control.</p>
+                                        <button onClick={() => setScreen('dataTransparency')} className="w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg mb-2">View Full Privacy Policy</button>
+                                        <button className="w-full px-4 py-2 bg-red-900/50 border border-red-500/50 text-red-300 rounded-lg">Delete All Data</button>
+                                    </div>
+                                    <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-6">
+                                        <h3 className="text-xl font-bold text-white mb-4">Account</h3>
+                                        <button className="w-full px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg mb-2">Change Password</button>
+                                        <button className="w-full px-4 py-3 bg-red-900/50 border border-red-500/50 text-red-300 rounded-lg flex items-center justify-center gap-2">
+                                            <LogOut />Logout
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Data Transparency Screen */}
+                    {screen === 'dataTransparency' && (
+                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                            <div className="max-w-4xl mx-auto">
+                                <div className="flex items-center gap-3 mb-8">
+                                    <button onClick={() => setScreen('preferences')} className="text-slate-400 hover:text-white flex items-center gap-2">
+                                        <ArrowLeft /> Back to Preferences
+                                    </button>
+                                </div>
+                                <div className="bg-slate-900/80 border-2 border-blue-500/50 rounded-2xl p-8">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <Shield />
+                                        <h2 className="text-3xl font-bold text-white">Data Transparency Panel</h2>
+                                    </div>
+                                    <div className="space-y-6">
+                                        <div className="border-b border-slate-700 pb-6">
+                                            <h3 className="text-xl font-semibold text-white mb-3">🎤 How We Store Your Audio</h3>
+                                            <div className="space-y-3 text-slate-300 text-sm">
+                                                <p><strong className="text-white">Encryption:</strong> All audio recordings are encrypted using AES-256 encryption (military-grade) both in transit and at rest</p>
+                                                <p><strong className="text-white">Storage:</strong> Secure cloud servers in your region</p>
+                                                <p><strong className="text-white">Retention:</strong> Audio files kept for 90 days, then automatically permanently deleted</p>
+                                                <p><strong className="text-white">Access:</strong> Only you and our AI processing system can access your recordings</p>
+                                            </div>
+                                        </div>
+                                        <div className="border-b border-slate-700 pb-6">
+                                            <h3 className="text-xl font-semibold text-white mb-3">📊 How We Use Your Data</h3>
+                                            <p className="text-slate-300 text-sm mb-3">Your responses are analyzed to provide personalized feedback on content, delivery, and confidence. Your resume and job descriptions are compared to tailor interview questions and identify skill gaps.</p>
+                                            <p className="text-red-400 text-sm font-semibold">We NEVER sell your data or share it with third parties</p>
+                                        </div>
+                                        <div className="border-b border-slate-700 pb-6">
+                                            <h3 className="text-xl font-semibold text-white mb-3">⏱️ Data Retention Policy</h3>
+                                            <div className="grid md:grid-cols-2 gap-4">
+                                                {[
+                                                    { label: 'Audio Recordings', value: '90 days (auto-deleted)' },
+                                                    { label: 'Interview Transcripts', value: '1 year' },
+                                                    { label: 'Resume & Job Descriptions', value: 'Until you delete them' },
+                                                    { label: 'Scores & Analytics', value: 'Permanent (for progress tracking)' }
+                                                ].map((item, i) => (
+                                                    <div key={i} className="bg-slate-800/50 rounded-lg p-4">
+                                                        <div className="font-semibold text-white mb-2">{item.label}</div>
+                                                        <div className="text-slate-300 text-sm">{item.value}</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-wrap gap-3">
+                                            <button className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">Download My Data</button>
+                                            <button className="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg">Export Interview History</button>
+                                            <button className="px-6 py-3 bg-red-900/50 border border-red-500/50 text-red-300 rounded-lg">Delete Account & All Data</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+   
+
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
+
+/* ============================================
+   END OF PART 3
+   
+   IMPORTANT: The Insights, Resume Gap Analysis, 
+   Profile, and Preferences screens are the same 
+   as your original code. Copy them from your 
+   original file before the closing </div> tag 
+   and before ReactDOM.render.
+   ============================================ */
