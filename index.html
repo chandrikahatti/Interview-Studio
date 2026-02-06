@@ -20,11 +20,8 @@
 </head>
 <body>
     <div id="root"></div>
-
     <script type="text/babel">
         const { useState } = React;
-
-        // Icon Components
         const User = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>;
         const Upload = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>;
         const FileText = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>;
@@ -41,7 +38,6 @@
         const Zap = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>;
         const LogOut = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>;
         const BookOpen = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>;
-        const Info = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>;
         const Edit3 = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>;
         const ArrowLeft = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>;
         const Pause = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>;
@@ -127,18 +123,8 @@
                 </div>
             );
 
-/* ============================================
-   END OF PART 1
-   CONTINUE WITH PART 2
-   ============================================ */
-/* ============================================
-   PART 2 OF 3
-   COPY THIS IMMEDIATELY AFTER PART 1
-   ============================================ */
-
             return (
                 <div className="min-h-screen bg-slate-950">
-                    {/* Sign Up Screen */}
                     {screen === 'signup' && (
                         <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center px-6">
                             <div className="max-w-md w-full">
@@ -198,8 +184,7 @@
                             )}
                         </div>
                     )}
-
-                    {/* Login Screen */}
+                    
                     {screen === 'login' && (
                         <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center px-6">
                             <div className="max-w-md w-full">
@@ -226,7 +211,6 @@
                         </div>
                     )}
 
-                    {/* Navigation - Only show when logged in */}
                     {!['signup', 'login'].includes(screen) && (
                         <nav className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 z-50">
                             <div className="max-w-7xl mx-auto px-6 py-4">
@@ -247,7 +231,6 @@
                         </nav>
                     )}
 
-                    {/* Home Screen */}
                     {screen === 'home' && (
                         <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
                             <div className="max-w-6xl mx-auto">
@@ -307,7 +290,7 @@
                                         <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0"><Lightbulb /></div>
                                         <div className="flex-1">
                                             <h3 className="text-xl font-bold text-white mb-2">Don't have your resume handy? No problem!</h3>
-                                            <p className="text-purple-200 mb-4">You can practice by selecting a skill or job title. We'll tailor questions accordingly.</p>
+                                            <p className="text-purple-200 mb-4">You can practice by typing any skill or job title. We'll tailor questions accordingly.</p>
                                             <button onClick={() => setShowSkillModal(true)} className="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all flex items-center gap-2"><Briefcase /> Practice by Skill/Role</button>
                                         </div>
                                     </div>
@@ -359,34 +342,27 @@
                         </div>
                     )}
 
-                    {/* Practice Screen */}
                     {screen === 'practice' && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                        <div className="pt-24 px-6 pb-12 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
                             <div className="max-w-6xl mx-auto">
-                                <div className="mb-6">
-                                    <button onClick={() => setScreen('home')} className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-all flex items-center gap-2"><ArrowLeft /> Back to Interview Hub</button>
-                                </div>
-                                {selectedSkill && (
-                                    <div className="bg-purple-900/30 border border-purple-500/50 rounded-xl p-4 mb-6">
-                                        <div className="flex items-center gap-2 text-purple-300"><Briefcase /><span className="font-semibold">Practicing for: {selectedSkill}</span></div>
-                                    </div>
-                                )}
-                                <h2 className="text-4xl font-bold text-white mb-3 text-center">Choose Your Interview Mode</h2>
+                                <button onClick={() => setScreen('home')} className="mb-6 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg flex items-center gap-2"><ArrowLeft /> Back</button>
+                                {selectedSkill && <div className="mb-6 bg-purple-900/30 border border-purple-500/50 rounded-xl p-4"><div className="flex items-center gap-2 text-purple-300"><Briefcase /><span className="font-semibold">Practicing for: {selectedSkill}</span></div></div>}
+                                <h2 className="text-4xl font-bold text-white text-center mb-3">Choose Your Interview Mode</h2>
                                 <p className="text-slate-400 text-center mb-12">Select the practice type that matches your preparation needs</p>
                                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {modes.map(m => {
                                         const available = canTakeInterview(m.id);
                                         const timeLeft = getNextAvailableTime(m.id);
                                         return (
-                                            <div key={m.id} onClick={() => { if (available) { setMode(m); setScreen('preInterview'); }}} className={`group bg-slate-900/50 border-2 rounded-2xl p-6 transition-all relative ${available ? 'border-slate-700/50 hover:border-slate-600 hover:scale-105 cursor-pointer' : 'border-slate-800/50 opacity-60 cursor-not-allowed'}`}>
+                                            <div key={m.id} onClick={() => available && (setMode(m), setScreen('interview'))} className={`group border-2 rounded-2xl p-6 transition-all relative ${available ? 'bg-slate-900/50 border-slate-700/50 hover:border-slate-600 hover:scale-105 cursor-pointer' : 'bg-slate-900/30 border-slate-800/50 opacity-60 cursor-not-allowed'}`}>
                                                 <div className="absolute top-4 right-4 text-3xl">{m.emoji}</div>
                                                 <h3 className="text-2xl font-bold text-white mb-3 pr-12">{m.name}</h3>
                                                 <div className="space-y-2 mb-6">
                                                     <div className="flex items-center gap-2 text-slate-300"><Clock /><span>{m.duration}</span></div>
                                                     <div className="text-slate-400 text-sm">{m.type}</div>
-                                                    {!available && timeLeft && (<div className="text-amber-400 text-sm font-semibold mt-2">Available in {timeLeft}</div>)}
+                                                    {!available && timeLeft && <div className="text-amber-400 text-sm font-semibold mt-2">Available in {timeLeft}</div>}
                                                 </div>
-                                                <button disabled={!available} className={`w-full px-4 py-3 font-semibold rounded-lg ${available ? 'bg-gradient-to-r from-indigo-600 to-pink-600 text-white' : 'bg-slate-700 text-slate-400 cursor-not-allowed'}`}>{available ? 'Start →' : 'Locked'}</button>
+                                                <button disabled={!available} className={`w-full px-4 py-3 font-semibold rounded-lg ${available ? 'bg-gradient-to-r from-indigo-600 to-pink-600 text-white' : 'bg-slate-700 text-slate-400'}`}>{available ? 'Start →' : 'Locked'}</button>
                                             </div>
                                         );
                                     })}
@@ -395,62 +371,8 @@
                         </div>
                     )}
 
-/* ============================================
-   END OF PART 2
-   CONTINUE WITH PART 3 (FINAL)
-   ============================================ */
-/* ============================================
-   PART 3 OF 3 (FINAL)
-   COPY THIS IMMEDIATELY AFTER PART 2
-   ============================================ */
-
-                    {/* Pre-Interview Confirmation */}
-                    {screen === 'preInterview' && mode && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
-                            <div className="max-w-3xl mx-auto">
-                                <InterviewControls showPause={false} />
-                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-8">
-                                    <h2 className="text-3xl font-bold text-white mb-6 text-center">Interview Confirmation</h2>
-                                    <div className="space-y-4 mb-8">
-                                        <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
-                                            <span className="text-slate-300">Interview Mode</span>
-                                            <span className="text-white font-semibold">{mode.name}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
-                                            <span className="text-slate-300">Duration</span>
-                                            <span className="text-white font-semibold">{mode.duration}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
-                                            <span className="text-slate-300">Input Method</span>
-                                            <span className="text-white font-semibold">Voice / Text</span>
-                                        </div>
-                                        {selectedSkill ? (
-                                            <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
-                                                <span className="text-slate-300">Selected Role</span>
-                                                <span className="text-purple-400 font-semibold">{selectedSkill}</span>
-                                            </div>
-                                        ) : (
-                                            <>
-                                                <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
-                                                    <span className="text-slate-300">Resume</span>
-                                                    <span className={`font-semibold ${hasResume ? 'text-emerald-400' : 'text-red-400'}`}>{hasResume ? '✔ Uploaded' : '❌ Not Added'}</span>
-                                                </div>
-                                                <div className="flex justify-between items-center p-4 bg-slate-800/50 rounded-lg">
-                                                    <span className="text-slate-300">Job Description</span>
-                                                    <span className={`font-semibold ${hasJD ? 'text-blue-400' : 'text-slate-500'}`}>{hasJD ? '✔ Applied' : '❌ Not Added'}</span>
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-                                    <button onClick={() => setScreen('interview')} className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all">Begin Interview</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Interview Screen */}
                     {screen === 'interview' && mode && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                        <div className="pt-24 px-6 pb-12 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
                             <div className="max-w-5xl mx-auto">
                                 <InterviewControls />
                                 <div className="flex justify-between items-center mb-8">
@@ -486,9 +408,8 @@
                         </div>
                     )}
 
-                    {/* Feedback Screen */}
                     {screen === 'feedback' && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                        <div className="pt-24 px-6 pb-12 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
                             <div className="max-w-4xl mx-auto">
                                 <InterviewControls showPause={false} />
                                 <div className="text-center mb-8">
@@ -499,10 +420,7 @@
                                     <div className="text-6xl font-bold bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent mb-2">8.2/10</div>
                                     <p className="text-xl text-white font-semibold mb-4">Overall Interview Score</p>
                                     <div className="bg-slate-900/50 border border-indigo-400/30 rounded-lg p-4 inline-block">
-                                        <div className="flex items-center gap-2 text-indigo-300">
-                                            <Mail />
-                                            <span className="text-sm">📧 Detailed feedback has been sent to your email</span>
-                                        </div>
+                                        <div className="flex items-center gap-2 text-indigo-300"><Mail /><span className="text-sm">📧 Detailed feedback has been sent to your email</span></div>
                                     </div>
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -525,6 +443,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                
                                 <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-6 mb-6">
                                     <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><BookOpen />Sample Better Answer</h3>
                                     <div className="bg-slate-800/50 rounded-lg p-4">
@@ -532,6 +451,7 @@
                                     </div>
                                     <p className="text-xs text-slate-400 mt-3">💡 Notice: Specific role, concrete metrics, clear STAR structure, quantifiable outcome</p>
                                 </div>
+
                                 <div className="bg-gradient-to-br from-purple-900/50 to-purple-800/50 border-2 border-purple-500/50 rounded-2xl p-6 mb-6">
                                     <h3 className="text-2xl font-bold text-purple-300 mb-4">🎯 Confidence Coach - Analytics</h3>
                                     <p className="text-purple-200 mb-6 text-sm">Detailed analysis of your delivery and communication patterns</p>
@@ -581,12 +501,10 @@
                                         <p className="text-purple-200 text-sm">Your filler words reduced by 32% this week. Keep practicing to maintain this improvement!</p>
                                     </div>
                                 </div>
-                                <div className="flex gap-4 mb-8">
-                                    <button onClick={() => { if (mode) markInterviewComplete(mode.id); setShowUserFeedback(true); }} className="flex-1 px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold rounded-xl">Continue</button>
-                                </div>
+
+                                <button onClick={() => { if (mode) markInterviewComplete(mode.id); setShowUserFeedback(true); }} className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold rounded-xl mb-8">Continue</button>
                             </div>
 
-                            {/* User Experience Feedback Modal */}
                             {showUserFeedback && (
                                 <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-6 overflow-y-auto">
                                     <div className="bg-slate-900 border-2 border-indigo-500/50 rounded-2xl p-8 max-w-2xl w-full my-8">
@@ -594,104 +512,145 @@
                                         <div className="mb-8">
                                             <h4 className="text-xl font-semibold text-white mb-4">How was your interview experience?</h4>
                                             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                                {[
-                                                    { emoji: '😃', label: 'Great', value: 'great' },
-                                                    { emoji: '🙂', label: 'Good', value: 'good' },
-                                                    { emoji: '😐', label: 'Okay', value: 'okay' },
-                                                    { emoji: '🙁', label: 'Poor', value: 'poor' }
-                                                ].map(option => (
-                                                    <button key={option.value} onClick={() => setFeedbackExperience(option.value)} className={`p-4 rounded-lg border-2 transition-all ${feedbackExperience === option.value ? 'border-indigo-500 bg-indigo-900/30' : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'}`}>
-                                                        <div className="text-3xl mb-2">{option.emoji}</div>
-                                                        <div className="text-white font-semibold">{option.label}</div>
+                                                {[{emoji:'😃',label:'Great',value:'great'},{emoji:'🙂',label:'Good',value:'good'},{emoji:'😐',label:'Okay',value:'okay'},{emoji:'🙁',label:'Poor',value:'poor'}].map(o => (
+                                                    <button key={o.value} onClick={() => setFeedbackExperience(o.value)} className={`p-4 rounded-lg border-2 transition-all ${feedbackExperience === o.value ? 'border-indigo-500 bg-indigo-900/30' : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'}`}>
+                                                        <div className="text-3xl mb-2">{o.emoji}</div>
+                                                        <div className="text-white font-semibold">{o.label}</div>
                                                     </button>
                                                 ))}
                                             </div>
                                         </div>
                                         <div className="mb-8">
-                                            <h4 className="text-xl font-semibold text-white mb-4">What should we improve? (Select all that apply)</h4>
+                                            <h4 className="text-xl font-semibold text-white mb-4">What should we improve?</h4>
                                             <div className="flex flex-wrap gap-2">
-                                                {['Questions quality', 'Difficulty level', 'Interview realism', 'Feedback clarity', 'App speed'].map(option => (
-                                                    <button key={option} onClick={() => { setFeedbackImprovements(prev => prev.includes(option) ? prev.filter(i => i !== option) : [...prev, option]); }} className={`px-4 py-2 rounded-lg border-2 transition-all ${feedbackImprovements.includes(option) ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'}`}>{option}</button>
+                                                {['Questions quality','Difficulty level','Interview realism','Feedback clarity','App speed'].map(o => (
+                                                    <button key={o} onClick={() => setFeedbackImprovements(p => p.includes(o) ? p.filter(i => i !== o) : [...p, o])} className={`px-4 py-2 rounded-lg border-2 transition-all ${feedbackImprovements.includes(o) ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300'}`}>{o}</button>
                                                 ))}
                                             </div>
                                         </div>
                                         <div className="mb-8">
                                             <h4 className="text-xl font-semibold text-white mb-4">What kind of interview do you want more of?</h4>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                {['Technical', 'Behavioral', 'Role-based (Sales / Finance / PM)', 'Resume-based', 'Company-specific'].map(option => (
-                                                    <button key={option} onClick={() => setFeedbackInterviewType(option)} className={`p-3 rounded-lg border-2 transition-all text-left ${feedbackInterviewType === option ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'}`}>{option}</button>
+                                                {['Technical','Behavioral','Role-based (Sales / Finance / PM)','Resume-based','Company-specific'].map(o => (
+                                                    <button key={o} onClick={() => setFeedbackInterviewType(o)} className={`p-3 rounded-lg border-2 transition-all text-left ${feedbackInterviewType === o ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300'}`}>{o}</button>
                                                 ))}
                                             </div>
                                         </div>
                                         <div className="mb-8">
                                             <h4 className="text-xl font-semibold text-white mb-4">Want early access to new features?</h4>
                                             <div className="grid grid-cols-2 gap-3 mb-4">
-                                                <button onClick={() => setFeedbackEarlyAccess(true)} className={`p-4 rounded-lg border-2 transition-all ${feedbackEarlyAccess === true ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'}`}>✅ Yes, join waitlist</button>
-                                                <button onClick={() => setFeedbackEarlyAccess(false)} className={`p-4 rounded-lg border-2 transition-all ${feedbackEarlyAccess === false ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600'}`}>❌ Not now</button>
+                                                <button onClick={() => setFeedbackEarlyAccess(true)} className={`p-4 rounded-lg border-2 ${feedbackEarlyAccess === true ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300'}`}>✅ Yes, join waitlist</button>
+                                                <button onClick={() => setFeedbackEarlyAccess(false)} className={`p-4 rounded-lg border-2 ${feedbackEarlyAccess === false ? 'border-indigo-500 bg-indigo-900/30 text-white' : 'border-slate-700 bg-slate-800/50 text-slate-300'}`}>❌ Not now</button>
                                             </div>
-                                            {feedbackEarlyAccess === true && (
-                                                <input type="email" placeholder="Enter your email" value={feedbackEarlyAccessEmail} onChange={(e) => setFeedbackEarlyAccessEmail(e.target.value)} className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
-                                            )}
+                                            {feedbackEarlyAccess === true && <input type="email" placeholder="Enter your email" value={feedbackEarlyAccessEmail} onChange={(e) => setFeedbackEarlyAccessEmail(e.target.value)} className="w-full p-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />}
                                         </div>
                                         <div className="mb-8">
-                                            <h4 className="text-xl font-semibold text-white mb-4">Anything else you'd like to share? (Optional)</h4>
+                                            <h4 className="text-xl font-semibold text-white mb-4">Anything else you'd like to share?</h4>
                                             <textarea placeholder="Share your thoughts..." value={feedbackAdditional} onChange={(e) => setFeedbackAdditional(e.target.value)} maxLength={200} className="w-full h-24 p-4 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 resize-none focus:outline-none focus:border-indigo-500" />
                                             <div className="text-xs text-slate-400 mt-1 text-right">{feedbackAdditional.length}/200</div>
                                         </div>
                                         <p className="text-xs text-slate-500 text-center mb-6">Feedback is anonymous. Data can be deleted anytime.</p>
-                                        <button onClick={() => { setShowUserFeedback(false); setScreen('practice'); }} className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all">Submit Feedback</button>
+                                        <button onClick={() => { setShowUserFeedback(false); setScreen('practice'); }} className="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold rounded-lg">Submit Feedback</button>
                                     </div>
                                 </div>
                             )}
                         </div>
                     )}
 
-                    {/* Insights Screen */}
                     {screen === 'insights' && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                        <div className="pt-24 px-6 pb-12 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
                             <div className="max-w-6xl mx-auto">
                                 <h2 className="text-4xl font-bold text-white mb-8 text-center">Your Progress Dashboard</h2>
                                 <div className="grid md:grid-cols-4 gap-4 mb-8">
-                                    {[
-                                        { label: 'Interview Readiness', value: '78%', color: 'indigo' },
-                                        { label: 'Resume Match', value: '82%', color: 'purple' },
-                                        { label: 'Practice Streak', value: '7 days', color: 'pink' },
-                                        { label: 'Avg Score', value: '8.1/10', color: 'emerald' }
-                                    ].map((stat, i) => (
-                                        <div key={i} className={`bg-gradient-to-br from-${stat.color}-900/50 to-${stat.color}-800/50 border border-${stat.color}-500/50 rounded-xl p-6`}>
-                                            <div className={`text-sm text-${stat.color}-300 mb-2`}>{stat.label}</div>
-                                            <div className="text-3xl font-bold text-white">{stat.value}</div>
+                                    {[{label:'Interview Readiness',value:'78%',color:'indigo'},{label:'Resume Match',value:'82%',color:'purple'},{label:'Practice Streak',value:'7 days',color:'pink'},{label:'Avg Score',value:'8.1/10',color:'emerald'}].map((s,i) => (
+                                        <div key={i} className={`bg-gradient-to-br from-${s.color}-900/50 to-${s.color}-800/50 border border-${s.color}-500/50 rounded-xl p-6`}>
+                                            <div className={`text-sm text-${s.color}-300 mb-2`}>{s.label}</div>
+                                            <div className="text-3xl font-bold text-white">{s.value}</div>
                                         </div>
                                     ))}
                                 </div>
-                     {/* Resume Gap Analysis Screen - ENHANCED */}
-                    {screen === 'resumeGap' && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
-                            <div className="max-w-5xl mx-auto">
-                                <div className="flex items-center gap-3 mb-8">
-                                    <button onClick={() => setScreen('home')} className="text-slate-400 hover:text-white flex items-center gap-2">
-                                        <ArrowLeft /> Back to Interview Hub
-                                    </button>
+
+                                {/* Confidence Trends Over Time - ADDED BACK */}
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-6 mb-6">
+                                    <h3 className="text-2xl font-bold text-white mb-4">Confidence Trends Over Time</h3>
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        <div className="text-center p-4 bg-slate-800/50 rounded-lg">
+                                            <div className="text-4xl mb-2">📉</div>
+                                            <div className="text-2xl font-semibold text-emerald-400">-32%</div>
+                                            <div className="text-sm text-slate-400 mt-1">Filler Words (Last 7 days)</div>
+                                        </div>
+                                        <div className="text-center p-4 bg-slate-800/50 rounded-lg">
+                                            <div className="text-4xl mb-2">📈</div>
+                                            <div className="text-2xl font-semibold text-blue-400">+15%</div>
+                                            <div className="text-sm text-slate-400 mt-1">Speech Clarity</div>
+                                        </div>
+                                        <div className="text-center p-4 bg-slate-800/50 rounded-lg">
+                                            <div className="text-4xl mb-2">⚡</div>
+                                            <div className="text-2xl font-semibold text-purple-400">+8%</div>
+                                            <div className="text-sm text-slate-400 mt-1">Response Speed</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                
+
+                                <div className="bg-slate-900/80 border-2 border-purple-500/50 rounded-2xl p-6 mb-6">
+                                    <h3 className="text-2xl font-bold text-purple-400 mb-4 flex items-center gap-2"><Target /> Resume Match - Suggested Improvements</h3>
+                                    <p className="text-slate-300 mb-6">Based on your current resume match of 82%, here are some suggestions:</p>
+                                    <div className="space-y-4">
+                                        <div className="bg-slate-800/50 rounded-lg p-4 border-l-4 border-amber-500">
+                                            <h4 className="font-semibold text-white mb-2">📊 Add Quantifiable Metrics</h4>
+                                            <p className="text-slate-300 text-sm mb-2">Include specific numbers and percentages in your achievements</p>
+                                            <p className="text-slate-400 text-xs">Example: "Increased sales by 40%" instead of "Improved sales performance"</p>
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-lg p-4 border-l-4 border-blue-500">
+                                            <h4 className="font-semibold text-white mb-2">🔑 Add Missing Buzzwords</h4>
+                                            <p className="text-slate-300 text-sm mb-2">Include these relevant keywords from job descriptions:</p>
+                                            <div className="flex flex-wrap gap-2 mt-2">
+                                                {['Data-driven','Cross-functional','Stakeholder management','OKRs'].map(w => <span key={w} className="px-2 py-1 bg-blue-900/30 text-blue-300 rounded text-xs">{w}</span>)}
+                                            </div>
+                                        </div>
+                                        <div className="bg-slate-800/50 rounded-lg p-4 border-l-4 border-emerald-500">
+                                            <h4 className="font-semibold text-white mb-2">🎯 Highlight Relevant Skills</h4>
+                                            <p className="text-slate-300 text-sm">Add certifications or tools that match your target roles</p>
+                                            <p className="text-slate-400 text-xs mt-1">Suggested: Agile/Scrum, SQL, Project Management tools</p>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => setScreen('resumeGap')} className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-all">View Full Resume Analysis →</button>
+                                </div>
+
+                                <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-6">
+                                    <h3 className="text-2xl font-bold text-white mb-6">Achievements 🏆</h3>
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        {[{emoji:'🔥',title:'7-Day Streak',subtitle:'Keep it up!'},{emoji:'💬',title:'Behavioral Master',subtitle:'10 perfect responses'},{emoji:'🎯',title:'Mock Complete',subtitle:'First full interview'}].map((a,i) => (
+                                            <div key={i} className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 text-center">
+                                                <div className="text-4xl mb-2">{a.emoji}</div>
+                                                <div className="text-white font-semibold">{a.title}</div>
+                                                <div className="text-xs text-slate-400 mt-1">{a.subtitle}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {screen === 'resumeGap' && (
+                        <div className="pt-24 px-6 pb-12 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+                            <div className="max-w-5xl mx-auto">
+                                <button onClick={() => setScreen('home')} className="mb-8 text-slate-400 hover:text-white flex items-center gap-2"><ArrowLeft /> Back to Interview Hub</button>
                                 <h2 className="text-4xl font-bold text-white mb-8">Resume Gap Analysis</h2>
-                                
-                                {/* Overall Match */}
                                 <div className="bg-gradient-to-br from-indigo-900/50 to-purple-900/50 border-2 border-indigo-500/50 rounded-2xl p-8 mb-6 text-center">
                                     <div className="text-6xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-2">82%</div>
                                     <p className="text-xl text-white font-semibold mb-2">Resume vs JD Match</p>
                                     <p className="text-slate-300 text-sm">Strong alignment with job requirements</p>
                                 </div>
-                                
-                                {/* Missing Skills */}
                                 <div className="bg-slate-900/80 border-2 border-amber-500/50 rounded-2xl p-6 mb-6">
                                     <h3 className="text-2xl font-bold text-amber-400 mb-4 flex items-center gap-2"><AlertCircle />Missing Skills</h3>
                                     <div className="space-y-3">
                                         {[
-                                            { skill: 'Agile/Scrum Certification', desc: 'The JD mentions "Certified Scrum Master preferred" - Consider getting this certification', priority: 'High', color: 'amber' },
-                                            { skill: 'SQL & Data Analysis', desc: 'JD requires "SQL proficiency" - Not mentioned in your resume', priority: 'Medium', color: 'orange' },
-                                            { skill: 'A/B Testing Experience', desc: 'JD mentions "experience with A/B testing frameworks"', priority: 'Low', color: 'slate' }
-                                        ].map((item, i) => (
+                                            {skill:'Agile/Scrum Certification',desc:'The JD mentions "Certified Scrum Master preferred" - Consider getting this certification',priority:'High',color:'amber'},
+                                            {skill:'SQL & Data Analysis',desc:'JD requires "SQL proficiency" - Not mentioned in your resume',priority:'Medium',color:'orange'},
+                                            {skill:'A/B Testing Experience',desc:'JD mentions "experience with A/B testing frameworks"',priority:'Low',color:'slate'}
+                                        ].map((item,i) => (
                                             <div key={i} className="bg-slate-800/50 rounded-lg p-4">
                                                 <div className="font-semibold text-white mb-1">{item.skill}</div>
                                                 <p className="text-sm text-slate-400 mb-2">{item.desc}</p>
@@ -700,27 +659,21 @@
                                         ))}
                                     </div>
                                 </div>
-                                
-                                {/* Buzzword Gaps */}
                                 <div className="bg-slate-900/80 border-2 border-blue-500/50 rounded-2xl p-6 mb-6">
                                     <h3 className="text-2xl font-bold text-blue-400 mb-4 flex items-center gap-2"><Zap />Buzzword Gaps</h3>
                                     <p className="text-slate-300 mb-4">Keywords from the JD that aren't in your resume:</p>
                                     <div className="flex flex-wrap gap-2">
-                                        {['Data-driven decisions', 'Cross-functional leadership', 'Stakeholder management', 'MVP', 'Go-to-market strategy', 'Customer journey mapping', 'OKRs'].map(w => (
-                                            <span key={w} className="px-3 py-2 bg-blue-900/30 border border-blue-500/30 text-blue-300 rounded-lg text-sm">{w}</span>
-                                        ))}
+                                        {['Data-driven decisions','Cross-functional leadership','Stakeholder management','MVP','Go-to-market strategy','Customer journey mapping','OKRs'].map(w => <span key={w} className="px-3 py-2 bg-blue-900/30 border border-blue-500/30 text-blue-300 rounded-lg text-sm">{w}</span>)}
                                     </div>
                                 </div>
-
-                                {/* Suggested Resume Improvements */}
                                 <div className="bg-slate-900/80 border-2 border-emerald-500/50 rounded-2xl p-6">
                                     <h3 className="text-2xl font-bold text-emerald-400 mb-4 flex items-center gap-2"><Target />Suggested Resume Improvements</h3>
                                     <div className="space-y-4">
                                         {[
-                                            { num: 1, title: 'Add Metrics Section', desc: 'Include a "Key Metrics" bullet: "Led 5 cross-functional teams across 3 product launches, achieving 40% user growth"' },
-                                            { num: 2, title: 'Incorporate JD Language', desc: 'Replace "managed projects" with "drove cross-functional initiatives" to match JD terminology' },
-                                            { num: 3, title: 'Highlight Relevant Tools', desc: 'Add "Tools: Jira, Asana, Mixpanel, SQL, Tableau" section if you have experience with these' },
-                                            { num: 4, title: 'Quantify Achievements', desc: 'Add specific numbers to your accomplishments: "Increased conversion by 25%", "Reduced churn by 15%"' }
+                                            {num:1,title:'Add Metrics Section',desc:'Include a "Key Metrics" bullet: "Led 5 cross-functional teams across 3 product launches, achieving 40% user growth"'},
+                                            {num:2,title:'Incorporate JD Language',desc:'Replace "managed projects" with "drove cross-functional initiatives" to match JD terminology'},
+                                            {num:3,title:'Highlight Relevant Tools',desc:'Add "Tools: Jira, Asana, Mixpanel, SQL, Tableau" section if you have experience with these'},
+                                            {num:4,title:'Quantify Achievements',desc:'Add specific numbers to your accomplishments: "Increased conversion by 25%", "Reduced churn by 15%"'}
                                         ].map(item => (
                                             <div key={item.num} className="bg-slate-800/50 rounded-lg p-4">
                                                 <div className="flex items-start gap-3">
@@ -739,9 +692,9 @@
                             </div>
                         </div>
                     )}
-                    {/* Profile Screen */}
+
                     {screen === 'profile' && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                        <div className="pt-24 px-6 pb-12 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
                             <div className="max-w-3xl mx-auto">
                                 <h2 className="text-4xl font-bold text-white mb-8 text-center">My Profile</h2>
                                 <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-8">
@@ -774,13 +727,17 @@
                                                 <select className="w-full p-4 bg-slate-800 border border-slate-600 rounded-lg text-white">
                                                     <option>Technology</option>
                                                     <option>Finance</option>
+                                                    <option>Healthcare</option>
+                                                    <option>Consulting</option>
                                                 </select>
                                             </div>
                                             <div>
                                                 <label className="block text-sm font-semibold text-slate-300 mb-2">Experience Level</label>
                                                 <select className="w-full p-4 bg-slate-800 border border-slate-600 rounded-lg text-white">
+                                                    <option>Entry Level</option>
                                                     <option>Intermediate</option>
                                                     <option>Advanced</option>
+                                                    <option>Senior</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -799,9 +756,8 @@
                         </div>
                     )}
 
-                    {/* Preferences Screen */}
                     {screen === 'preferences' && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                        <div className="pt-24 px-6 pb-12 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
                             <div className="max-w-3xl mx-auto">
                                 <h2 className="text-4xl font-bold text-white mb-8 text-center">Preferences</h2>
                                 <div className="space-y-6">
@@ -813,6 +769,7 @@
                                                 <select className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white">
                                                     <option>Voice & Text</option>
                                                     <option>Voice Only</option>
+                                                    <option>Text Only</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -826,24 +783,17 @@
                                     <div className="bg-slate-900/80 border-2 border-slate-700 rounded-2xl p-6">
                                         <h3 className="text-xl font-bold text-white mb-4">Account</h3>
                                         <button className="w-full px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg mb-2">Change Password</button>
-                                        <button className="w-full px-4 py-3 bg-red-900/50 border border-red-500/50 text-red-300 rounded-lg flex items-center justify-center gap-2">
-                                            <LogOut />Logout
-                                        </button>
+                                        <button onClick={() => setScreen('login')} className="w-full px-4 py-3 bg-red-900/50 border border-red-500/50 text-red-300 rounded-lg flex items-center justify-center gap-2"><LogOut />Logout</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* Data Transparency Screen */}
                     {screen === 'dataTransparency' && (
-                        <div className="pt-24 px-6 pb-12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+                        <div className="pt-24 px-6 pb-12 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
                             <div className="max-w-4xl mx-auto">
-                                <div className="flex items-center gap-3 mb-8">
-                                    <button onClick={() => setScreen('preferences')} className="text-slate-400 hover:text-white flex items-center gap-2">
-                                        <ArrowLeft /> Back to Preferences
-                                    </button>
-                                </div>
+                                <button onClick={() => setScreen('preferences')} className="mb-8 text-slate-400 hover:text-white flex items-center gap-2"><ArrowLeft /> Back to Preferences</button>
                                 <div className="bg-slate-900/80 border-2 border-blue-500/50 rounded-2xl p-8">
                                     <div className="flex items-center gap-3 mb-6">
                                         <Shield />
@@ -868,11 +818,11 @@
                                             <h3 className="text-xl font-semibold text-white mb-3">⏱️ Data Retention Policy</h3>
                                             <div className="grid md:grid-cols-2 gap-4">
                                                 {[
-                                                    { label: 'Audio Recordings', value: '90 days (auto-deleted)' },
-                                                    { label: 'Interview Transcripts', value: '1 year' },
-                                                    { label: 'Resume & Job Descriptions', value: 'Until you delete them' },
-                                                    { label: 'Scores & Analytics', value: 'Permanent (for progress tracking)' }
-                                                ].map((item, i) => (
+                                                    {label:'Audio Recordings',value:'90 days (auto-deleted)'},
+                                                    {label:'Interview Transcripts',value:'1 year'},
+                                                    {label:'Resume & Job Descriptions',value:'Until you delete them'},
+                                                    {label:'Scores & Analytics',value:'Permanent (for progress tracking)'}
+                                                ].map((item,i) => (
                                                     <div key={i} className="bg-slate-800/50 rounded-lg p-4">
                                                         <div className="font-semibold text-white mb-2">{item.label}</div>
                                                         <div className="text-slate-300 text-sm">{item.value}</div>
@@ -893,23 +843,8 @@
                 </div>
             );
         };
-   
-
-                </div>
-            );
-        };
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 </body>
 </html>
-
-/* ============================================
-   END OF PART 3
-   
-   IMPORTANT: The Insights, Resume Gap Analysis, 
-   Profile, and Preferences screens are the same 
-   as your original code. Copy them from your 
-   original file before the closing </div> tag 
-   and before ReactDOM.render.
-   ============================================ */
